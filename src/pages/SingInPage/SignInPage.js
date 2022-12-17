@@ -62,8 +62,8 @@ export default function SignInPage() {
                         /> : <p>Entrar</p>}
                     </Button>
                 </form>
-                <Link to="/cadastro">
-                    <p data-test="signup-link">Não tem uma conta? Cadastre-se!</p>
+                <Link data-test="signup-link" to="/cadastro">
+                    <p>Não tem uma conta? Cadastre-se!</p>
                 </Link>
             </FormContainer>
         </Container>
