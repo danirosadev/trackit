@@ -9,8 +9,8 @@ export default function TodayCard({ name, done, currentSequence, highestSequence
                 <CardSubTitle data-test="today-habit-sequence">Sequência atual: {currentSequence} dias</CardSubTitle>
                 <CardSubTitle data-test="today-habit-record">Seu recorde: {highestSequence} dias</CardSubTitle>
             </div>
-            <Checkbox>
-                <img data-test="today-habit-check-btn" onClick={checked ? uncheckHabit : checkHabit} itsDone={done} src={check} alt="" />
+            <Checkbox data-test="today-habit-check-btn">
+                <img onClick={checked ? uncheckHabit : checkHabit} itsDone={done} src={check} alt="" />
             </Checkbox>
         </Card>
     )
