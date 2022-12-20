@@ -12,6 +12,17 @@ export default function HabitsPage() {
     const { userData } = useContext(UserContext)
     const [newHabits, setNewHabits] = useState(false);
     const [habits, setHabits] = useState([]);
+    const [selectedDays, setSelectedDays] = useState([])
+
+    function handleDay(day) {
+        const isSelected = selectedDays.some((d) => d.id === day.id)
+        if (isSelected) {
+            const newList = selectedDays.filter((d) => d.id !== day.id)
+            setSelectedDays(newList)
+        } else {
+            setSelectedDays([...selectedDays, day])
+        }
+    }
 
     useEffect(() => {
         const config = {
@@ -24,7 +35,10 @@ export default function HabitsPage() {
         promise.then((res) => {
             setHabits(res.data)
         })
-    }, [setHabits])
+        .catch((err) => {
+            console.log(err.response.data)
+        })
+    }, [habits])
 
     return (
         <>
@@ -39,6 +53,8 @@ export default function HabitsPage() {
                     <CreateHabitCard
                         newHabits={newHabits}
                         setNewHabits={setNewHabits}
+                        handleDay={handleDay}
+                        selectedDays={selectedDays}
                     />
                 ) : ""}
 
@@ -49,6 +65,7 @@ export default function HabitsPage() {
                         habitId={hab.id}
                         days={hab.days}
                         setHabits={setHabits}
+                        selectedDays={selectedDays}
                     />
                 ))}
 

@@ -2,22 +2,20 @@ import axios from "axios"
 import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../context/context"
+import { WEEKDAYS } from "../constants/weekday"
 
-export default function CreateHabitCard({ newHabits, setNewHabits }) {
+export default function CreateHabitCard({ newHabits, setNewHabits, handleDay, selectedDays }) {
     const { userData } = useContext(UserContext)
-    const [selectedDays, setSelectedDays] = useState([])
     const [form, setForm] = useState({ name: "", days: [] })
 
-    function handleDay(id) {
-        setSelectedDays([...selectedDays, id])
-    }
     function handleForm(e) {
         e.preventDefault()
+        const days = selectedDays.map( d => d.id)
 
         setForm({
             ...form,
             [e.target.name]: e.target.value,
-            days: [...selectedDays]
+            days: days
         })
     }
 
@@ -46,13 +44,15 @@ export default function CreateHabitCard({ newHabits, setNewHabits }) {
         <CreateHabit data-test="habit-create-container" onSubmit={createHabit}>
             <HabitInput data-test="habit-name-input" name="name" onChange={handleForm} value={form.name} type="text" placeholder="nome do hábito" />
             <DayContainer>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(0)}>D</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(1)}>S</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(2)}>T</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(3)}>Q</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(4)}>Q</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(5)}>S</DayButton>
-                <DayButton data-test="habit-day" name="days" onClick={() => handleDay(6)}>S</DayButton>
+                {WEEKDAYS.map((day) => 
+                    <DayButton data-test="habit-day" 
+                    key={day.id} 
+                    name="days" 
+                    onClick={() => handleDay(day)}
+                    isSelected={selectedDays.some((d) => d.id === day.id)}>
+                        {day.name}
+                    </DayButton>
+                )}
             </DayContainer>
             <ButtonContainer>
                 <CancelButton data-test="habit-create-cancel-btn" onClick={() => setNewHabits(!newHabits)}>Cancelar</CancelButton>
@@ -87,11 +87,11 @@ const DayContainer = styled.div`
 const DayButton = styled.div`
     width: 30px;
     height: 30px;
-    background-color: white;
+    background-color: ${props => props.isSelected ? "#dbdbdb" : "white"};
     border: 1px solid #d4d4d4;
     font-size: 20px;
     font-weight: bold;
-    color: #dbdbdb;
+    color: ${props => props.isSelected ? "white" : "#dbdbdb"};
     border-radius: 5px;
     margin: 5px 5px 0 0;
     display: flex;

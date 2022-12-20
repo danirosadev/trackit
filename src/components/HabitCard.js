@@ -2,9 +2,10 @@ import axios from "axios"
 import { useContext } from "react"
 import styled from "styled-components"
 import { UserContext } from "../context/context"
-import {BASE_URL} from "../constants/urls"
+import { BASE_URL } from "../constants/urls"
+import { WEEKDAYS } from "../constants/weekday"
 
-export default function HabitCard({ habitName, habitId, days, setHabits }) {
+export default function HabitCard({ habitName, habitId, setHabits, days }) {
     const { userData } = useContext(UserContext)
 
     function deleteHabit() {
@@ -29,13 +30,13 @@ export default function HabitCard({ habitName, habitId, days, setHabits }) {
                 <ion-icon data-test="habit-delete-btn" onClick={deleteHabit} name="trash-outline"></ion-icon>
             </HabitTitleContainer>
             <DayContainer>
-                <DayButton data-test="habit-day">D</DayButton>
-                <DayButton data-test="habit-day">S</DayButton>
-                <DayButton data-test="habit-day">T</DayButton>
-                <DayButton data-test="habit-day">Q</DayButton>
-                <DayButton data-test="habit-day">Q</DayButton>
-                <DayButton data-test="habit-day">S</DayButton>
-                <DayButton data-test="habit-day">S</DayButton>
+                {WEEKDAYS.map((day, i) =>
+                    <DayButton data-test="habit-day"
+                        key={day.id}
+                        isSelected={days.map((d) => d.i === i)}
+                    >{day.name}
+                    </DayButton>
+                )}
             </DayContainer>
         </Habit>
     )
@@ -65,11 +66,11 @@ const DayContainer = styled.div`
 const DayButton = styled.div`
     width: 30px;
     height: 30px;
-    background-color: white;
+    background-color: ${props => props.isSelected ? "#dbdbdb" : "white"};
     border: 1px solid #d4d4d4;
     font-size: 20px;
     font-weight: bold;
-    color: #dbdbdb;
+    color: ${props => props.isSelected ? "white" : "#dbdbdb"};
     border-radius: 5px;
     margin: 5px 5px 0 0;
     display: flex;

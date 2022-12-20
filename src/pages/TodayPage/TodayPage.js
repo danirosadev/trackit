@@ -36,6 +36,9 @@ export default function TodayPage(){
             console.log(res.data)
             setTodayHabits(res.data)
         })
+        .catch((err) => {
+            console.log(err.response.data)
+        })
     }, [])
 
     return(
