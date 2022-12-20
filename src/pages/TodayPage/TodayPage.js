@@ -12,6 +12,7 @@ import { BASE_URL } from "../../constants/urls"
 export default function TodayPage() {
     const [todayHabits, setTodayHabits] = useState([])
     const { userData } = useContext(UserContext)
+    const [checked, setChecked] = useState(false)
 
     let weekday = ''
     let day = ''
@@ -53,9 +54,30 @@ export default function TodayPage() {
         const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/check`, body, config)
         promise.then((res) => {
             console.log(res.data)
+            setChecked(true)
         }).catch((err) => {
             console.log(err.response.data)
         })
+    }
+
+    function uncheckHabit(){
+        function checkHabit(){
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${userData.token}`
+                }
+            }
+    
+            const body = ""
+    
+            const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/uncheck`, body, config)
+            promise.then((res) => {
+                console.log(res.data)
+                setChecked(false)
+            }).catch((err) => {
+                console.log(err.response.data)
+            })
+        }
     }
 
     return (
@@ -76,6 +98,8 @@ export default function TodayPage() {
                             currentSequence={hab.currentSequence}
                             highestSequence={hab.highestSequence}
                             checkHabit={checkHabit}
+                            uncheckHabit={uncheckHabit}
+                            checked={checked}
                         />
                     })}
                 </div>

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import check from "../assets/img/check.png"
 
-export default function TodayCard({ name, done, currentSequence, highestSequence, habId, checkHabit }) {
+export default function TodayCard({ name, done, currentSequence, highestSequence, habId, checkHabit, uncheckHabit, checked }) {
     return (
         <Card data-test="today-habit-container">
             <div>
@@ -10,7 +10,7 @@ export default function TodayCard({ name, done, currentSequence, highestSequence
                 <CardSubTitle data-test="today-habit-record">Seu recorde: {highestSequence} dias</CardSubTitle>
             </div>
             <Checkbox>
-                <img data-test="today-habit-check-btn" onClick={checkHabit} itsDone={done} src={check} alt="" />
+                <img data-test="today-habit-check-btn" onClick={checked ? uncheckHabit : checkHabit} itsDone={done} src={check} alt="" />
             </Checkbox>
         </Card>
     )
