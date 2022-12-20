@@ -1,16 +1,16 @@
 import styled from "styled-components"
 import check from "../assets/img/check.png"
 
-export default function TodayCard({ name, done, currentSequence, highestSequence, habId }) {
+export default function TodayCard({ name, done, currentSequence, highestSequence, habId, checkHabit }) {
     return (
-        <Card>
+        <Card data-test="today-habit-container">
             <div>
                 <CardTitle data-test="today-habit-name">{name}</CardTitle>
                 <CardSubTitle data-test="today-habit-sequence">Sequência atual: {currentSequence} dias</CardSubTitle>
                 <CardSubTitle data-test="today-habit-record">Seu recorde: {highestSequence} dias</CardSubTitle>
             </div>
             <Checkbox>
-                <img data-test="today-habit-check-btn" itsDone={done} src={check} alt="" />
+                <img data-test="today-habit-check-btn" onClick={checkHabit} itsDone={done} src={check} alt="" />
             </Checkbox>
         </Card>
     )

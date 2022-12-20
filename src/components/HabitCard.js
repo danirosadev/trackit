@@ -33,7 +33,7 @@ export default function HabitCard({ habitName, habitId, setHabits, days, selecte
                 {WEEKDAYS.map((day, i) =>
                     <DayButton data-test="habit-day"
                         key={day.id}
-                        isSelected={selectedDays.some(d => d.id === i)}
+                        isSelected={selectedDays.includes(i)}
                     >{day.name}
                     </DayButton>
                 )}

@@ -55,6 +55,7 @@ export default function HabitsPage() {
                         setNewHabits={setNewHabits}
                         handleDay={handleDay}
                         selectedDays={selectedDays}
+                        setSelectedDays={setSelectedDays}
                     />
                 ) : ""}
 

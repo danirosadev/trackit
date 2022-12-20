@@ -41,6 +41,23 @@ export default function TodayPage() {
             })
     }, [])
 
+    function checkHabit(){
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${userData.token}`
+            }
+        }
+
+        const body = ""
+
+        const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/check`, body, config)
+        promise.then((res) => {
+            console.log(res.data)
+        }).catch((err) => {
+            console.log(err.response.data)
+        })
+    }
+
     return (
         <>
             <Header />
@@ -58,6 +75,7 @@ export default function TodayPage() {
                             done={hab.done}
                             currentSequence={hab.currentSequence}
                             highestSequence={hab.highestSequence}
+                            checkHabit={checkHabit}
                         />
                     })}
                 </div>

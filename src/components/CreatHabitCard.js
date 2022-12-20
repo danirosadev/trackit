@@ -3,8 +3,9 @@ import { useContext, useState } from "react"
 import styled from "styled-components"
 import { UserContext } from "../context/context"
 import { WEEKDAYS } from "../constants/weekday"
+import {BASE_URL} from "../constants/urls"
 
-export default function CreateHabitCard({ newHabits, setNewHabits, handleDay, selectedDays }) {
+export default function CreateHabitCard({ newHabits, setNewHabits, handleDay, selectedDays, setSelectedDays }) {
     const { userData } = useContext(UserContext)
     const [form, setForm] = useState({ name: "", days: [] })
 
@@ -28,13 +29,14 @@ export default function CreateHabitCard({ newHabits, setNewHabits, handleDay, se
             }
         }
 
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", form, config)
+        const promise = axios.post(`${BASE_URL}/habits`, form, config)
         promise.then((res) => {
             console.log(res.data)
+            setSelectedDays([])
         })
 
         promise.catch((err) => {
-            console.log(err.response.data.message)
+            alert(err.response.data.message)
         })
 
         setNewHabits(!newHabits)
