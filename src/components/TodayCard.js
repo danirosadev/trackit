@@ -3,7 +3,7 @@ import check from "../assets/img/check.png"
 
 export default function TodayCard({ name, done, currentSequence, highestSequence, habId }) {
     return (
-        <Card data-test="today-habit-container">
+        <Card>
             <div>
                 <CardTitle data-test="today-habit-name">{name}</CardTitle>
                 <CardSubTitle data-test="today-habit-sequence">Sequência atual: {currentSequence} dias</CardSubTitle>
