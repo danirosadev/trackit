@@ -3,27 +3,28 @@ import check from "../assets/img/check.png"
 
 export default function TodayCard({ name, done, currentSequence, highestSequence, habId, checkHabit, uncheckHabit, checked }) {
     return (
-        <Card data-test="today-habit-container">
+        <Card>
             <div>
                 <CardTitle data-test="today-habit-name">{name}</CardTitle>
                 <CardSubTitle data-test="today-habit-sequence">Sequência atual: {currentSequence} dias</CardSubTitle>
                 <CardSubTitle data-test="today-habit-record">Seu recorde: {highestSequence} dias</CardSubTitle>
             </div>
-            <Checkbox data-test="today-habit-check-btn">
-                <img onClick={checked ? uncheckHabit : checkHabit} itsDone={done} src={check} alt="" />
+            <Checkbox>
+                <img data-test="today-habit-check-btn" onClick={checked ? uncheckHabit : checkHabit} itsDone={done} src={check} alt="" />
             </Checkbox>
         </Card>
     )
 }
 
 const Card = styled.div`
-    width: 90%;
+    width: 100%;
     height: 95px;
     border-radius: 5px;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 10px;
 `
 const CardTitle = styled.p`
     font-size: 20px;

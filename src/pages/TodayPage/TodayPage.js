@@ -11,6 +11,7 @@ import { BASE_URL } from "../../constants/urls"
 
 export default function TodayPage() {
     const [todayHabits, setTodayHabits] = useState([])
+    const [habit, setHabit] = useState("")
     const { userData } = useContext(UserContext)
     const [checked, setChecked] = useState(false)
 
@@ -32,17 +33,18 @@ export default function TodayPage() {
             }
         }
 
-        const promise = axios.get(`${BASE_URL}/habits/today"`, config)
+        const promise = axios.get(`${BASE_URL}/habits/today`, config)
         promise.then((res) => {
             console.log(res.data)
             setTodayHabits(res.data)
+            setHabit(res.data.id)
         })
             .catch((err) => {
                 console.log(err.response.data)
             })
     }, [])
 
-    function checkHabit(){
+    function checkHabit() {
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`
@@ -51,7 +53,7 @@ export default function TodayPage() {
 
         const body = ""
 
-        const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/check`, body, config)
+        const promise = axios.post(`${BASE_URL}/habits/${habit}/check`, body, config)
         promise.then((res) => {
             console.log(res.data)
             setChecked(true)
@@ -60,24 +62,22 @@ export default function TodayPage() {
         })
     }
 
-    function uncheckHabit(){
-        function checkHabit(){
-            const config = {
-                headers: {
-                    "Authorization": `Bearer ${userData.token}`
-                }
+    function uncheckHabit() {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${userData.token}`
             }
-    
-            const body = ""
-    
-            const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/uncheck`, body, config)
-            promise.then((res) => {
-                console.log(res.data)
-                setChecked(false)
-            }).catch((err) => {
-                console.log(err.response.data)
-            })
         }
+
+        const body = ""
+
+        const promise = axios.post(`${BASE_URL}/habits/${todayHabits.id}/uncheck`, body, config)
+        promise.then((res) => {
+            console.log(res.data)
+            setChecked(false)
+        }).catch((err) => {
+            console.log(err.response.data)
+        })
     }
 
     return (
@@ -86,22 +86,26 @@ export default function TodayPage() {
             <Container>
                 <TitleContainer>
                     <Title data-test="today">{weekday}, {day}</Title>
-                    <SubTitle data-test="today-counter">Nenhum hábito concluído ainda</SubTitle>
+
                 </TitleContainer>
-                <div  data-test="today-habit-container">
-                    {todayHabits.map((hab) => {
-                        <TodayCard
-                            key={hab.id}
-                            habId={hab.id}
-                            name={hab.name}
-                            done={hab.done}
-                            currentSequence={hab.currentSequence}
-                            highestSequence={hab.highestSequence}
-                            checkHabit={checkHabit}
-                            uncheckHabit={uncheckHabit}
-                            checked={checked}
-                        />
-                    })}
+                <div data-test="today-habit-container">
+                    {todayHabits.length === 0 ?
+                        <SubTitle data-test="today-counter">Nenhum hábito concluído ainda</SubTitle> :
+
+                        (todayHabits.map((hab) => (
+                            <TodayCard
+                                key={hab.id}
+                                habId={hab.id}
+                                name={hab.name}
+                                done={hab.done}
+                                currentSequence={hab.currentSequence}
+                                highestSequence={hab.highestSequence}
+                                checkHabit={checkHabit}
+                                uncheckHabit={uncheckHabit}
+                                checked={checked}
+                            />
+                        )))
+                    }
                 </div>
             </Container>
             <Footer />
