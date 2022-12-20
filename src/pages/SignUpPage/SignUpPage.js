@@ -30,13 +30,13 @@ export default function SignUpPage(){
 
         const promise = axios.post(`${BASE_URL}/auth/sign-up`, form)
         promise.then(() => {
-            navigate("/")
             setDisabled(true)
+            navigate("/")
         })
 
         promise.catch((err) => {
-            alert(err.response.data.message)
             setDisabled(false)
+            alert(err.response.data.message)
         })
     }
 

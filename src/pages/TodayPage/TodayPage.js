@@ -44,7 +44,7 @@ export default function TodayPage(){
     return(
         <>
             <Header />
-            <Container>
+            <Container data-test="today-habit-container">
                 <TitleContainer>
                     <Title data-test="today">{weekday}, {day}</Title>
                     <SubTitle data-test="today-counter">Nenhum hábito concluído ainda</SubTitle>

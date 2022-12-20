@@ -5,7 +5,7 @@ import { UserContext } from "../context/context"
 import { BASE_URL } from "../constants/urls"
 import { WEEKDAYS } from "../constants/weekday"
 
-export default function HabitCard({ habitName, habitId, setHabits, days }) {
+export default function HabitCard({ habitName, habitId, setHabits, days, selectedDays }) {
     const { userData } = useContext(UserContext)
 
     function deleteHabit() {
@@ -33,7 +33,7 @@ export default function HabitCard({ habitName, habitId, setHabits, days }) {
                 {WEEKDAYS.map((day, i) =>
                     <DayButton data-test="habit-day"
                         key={day.id}
-                        isSelected={days.map((d) => d.i === i)}
+                        isSelected={selectedDays.some(d => d.id === i)}
                     >{day.name}
                     </DayButton>
                 )}
